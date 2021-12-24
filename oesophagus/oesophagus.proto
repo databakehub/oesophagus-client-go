@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+message Swallow {
+  string measurement = 1;
+  string fieldSet = 2;
+  string tagSet = 3;
+  int64 timestamp = 4;
+}
+
+message Burp {
+  int32 status = 1;
+  string message = 2;
+}
+
+service OesophagusService {
+  rpc Consume(Swallow) returns (Burp) {}
+}
