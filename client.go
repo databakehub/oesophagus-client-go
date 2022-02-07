@@ -56,17 +56,14 @@ func (x *OesophagusClient) Consume(
 	fieldSet string,
 	tagSet string,
 	timestamp int64) error {
-	var r *pb.Burp
 	var err error
 	if x.isGrpc {
-		r, err = x.ConsumeGrpc(ctx, &pb.Swallow{Measurement: measurement, FieldSet: fieldSet, TagSet: tagSet, Timestamp: timestamp})
+		_, err = x.ConsumeGrpc(ctx, &pb.Swallow{Measurement: measurement, FieldSet: fieldSet, TagSet: tagSet, Timestamp: timestamp})
 	} else {
-		r, err = x.ConsumeHTTP(ctx, &pb.Swallow{Measurement: measurement, FieldSet: fieldSet, TagSet: tagSet, Timestamp: timestamp})
+		_, err = x.ConsumeHTTP(ctx, &pb.Swallow{Measurement: measurement, FieldSet: fieldSet, TagSet: tagSet, Timestamp: timestamp})
 	}
 	if err != nil {
 		log.Println("Swallow error:", err.Error())
-	} else {
-		log.Println("Swallowed:", r.Message)
 	}
 	return err
 }
