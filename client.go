@@ -77,7 +77,10 @@ func (x *OesophagusClient) Cleanup() {
 
 // InitOesophagusGrpcClient initializes grpc client
 func InitOesophagusGrpcClient(address string) (*OesophagusClient, error) {
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	conn, err := grpc.Dial(address,
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+	)
 	if err != nil {
 		return nil, err
 	}
