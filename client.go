@@ -11,6 +11,7 @@ import (
 	pb "github.com/databakehub/oesophagus-client-go/oesophagus"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 // PublicAddress is the public IP address of oesophagus server
@@ -77,8 +78,9 @@ func (x *OesophagusClient) Cleanup() {
 
 // InitOesophagusGrpcClient initializes grpc client
 func InitOesophagusGrpcClient(address string) (*OesophagusClient, error) {
+	creds := insecure.NewCredentials()
 	conn, err := grpc.Dial(address,
-		grpc.WithInsecure(),
+		grpc.WithTransportCredentials(creds),
 		grpc.WithBlock(),
 	)
 	if err != nil {
